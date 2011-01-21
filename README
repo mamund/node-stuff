@@ -3,3 +3,8 @@ node-stuff
 random nonesense using node.js
 
 not much to see here<g>.
+
+file-server.js is "fixed|updated" version from here:
+http://net.tutsplus.com/tutorials/javascript-ajax/learning-serverside-javascript-with-node-js/
+
+file-server2.js is my own re-writing of the same thing.
