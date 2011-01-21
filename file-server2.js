@@ -13,17 +13,19 @@ http.createServer(fileServer).listen(8124);
 sys.puts("Server is running at http://localhost:8124/");
 
 // define server
-function fileServer(request,response)
+function fileServer(req,res)
 {
   var g = {};
+  init();
   
-  // init vars
-  g.path = url.parse(request.url).pathname;
-  g.file = path.join(process.cwd(),g.path);
-  g.contentType = "text/plain";
-  
-  // handle the request
-  path.exists(g.file, checkFile);
+  function init()
+  {
+    // init vars
+    g.file = path.join(process.cwd(),url.parse(req.url).pathname);
+    g.contentType = "text/plain";
+    
+    path.exists(g.file, checkFile);
+  }
 
   function checkFile(exists)
   {
@@ -46,21 +48,21 @@ function fileServer(request,response)
     }
     else
     {
-      response.writeHead(200);
-      response.write(file,"binary");
-      response.end();
+      res.writeHead(200);
+      res.write(file,"binary");
+      res.end();
     }
     return;
   }
   
   function sendError(status,msg)
   {
-    response.writeHead(status,[["Content-Type",g.contentType]]);
+    res.writeHead(status,[["Content-Type",g.contentType]]);
     if(msg)
     {
-      response.write(msg + '\n');
+      res.write(msg + '\n');
     }
-    response.end();
+    res.end();
     return;
   }
 }
